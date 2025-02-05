@@ -20,6 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'human_detection_node = human_detection_yolov8.human_detection_node:main'
         ],
     },
 )
