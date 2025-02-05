@@ -5,6 +5,9 @@ flowchart LR
     A(["/"]) ==> B["/"] ==> C(["/"])
 ```
 ## Dependency
+    sudo apt install ros-$ROS_DISTRO-cv-bridge
+
+    ros-$ROS_DISTRO-image-transport
 ## Setup
     cd ~/ros2_ws/src  #Go to ros workspace
 
