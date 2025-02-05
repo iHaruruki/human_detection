@@ -3,7 +3,7 @@ YOLOv8 を使用して人物を検出し、対象の人物が 2m 以内にいる
 ### Node and Topic
 ```mermaid
 flowchart LR
-    A(["/camera/color/image_raw"]) & B(["/camera/depth/image_raw"]) ==> C["/human_detection_node"]
+    A["/camera/color/image_raw"] & B["/camera/depth/image_raw"] ==> C(["/human_detection_node"])
 ```
 ## Dependency
     sudo apt install ros-$ROS_DISTRO-cv-bridge
