@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import rclpy
 from rclpy.node import Node
 
@@ -35,6 +38,10 @@ class HumanDetectionNode(Node):
         self.latest_color_msg = None
         self.latest_depth_msg = None
 
+        # 表示ウィンドウの設定（ウィンドウサイズを大きくする）
+        cv2.namedWindow("YOLOv8 Detection", cv2.WINDOW_NORMAL)
+        cv2.resizeWindow("YOLOv8 Detection", 1280, 720)
+
         # タイマーで定期的に画像処理を実行（約10Hz）
         self.timer = self.create_timer(0.1, self.timer_callback)
 
@@ -45,7 +52,7 @@ class HumanDetectionNode(Node):
         self.latest_depth_msg = msg
 
     def timer_callback(self):
-        # 両方の画像がまだ取得できていなければ処理しない
+        # 両方の画像が取得できていなければ処理しない
         if self.latest_color_msg is None or self.latest_depth_msg is None:
             return
 
@@ -76,7 +83,7 @@ class HumanDetectionNode(Node):
                     if 0 <= cx < depth_image.shape[1] and 0 <= cy < depth_image.shape[0]:
                         # 深度画像の値はミリメートル単位なので、メートルに変換
                         distance_raw = depth_image[cy, cx]
-                        distance = distance_raw / 1000.0
+                        distance = distance_raw / 1000.0  # 例: 600 -> 0.6m
 
                         text = f"person: {distance:.2f}m"
                         cv2.rectangle(color_image, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
@@ -84,10 +91,10 @@ class HumanDetectionNode(Node):
                                     cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
                         self.get_logger().info(text)
 
-                        #if distance < 2.0:
-                        #    self.get_logger().info("human detected")
-
-        cv2.imshow("YOLOv8 Detection", color_image)
+        # 画像自体を拡大して表示（ここで画像全体を大きくする）
+        scale_factor = 2.0  # 例として2倍に拡大
+        resized_image = cv2.resize(color_image, None, fx=scale_factor, fy=scale_factor, interpolation=cv2.INTER_LINEAR)
+        cv2.imshow("YOLOv8 Detection", resized_image)
         cv2.waitKey(1)
 
 def main(args=None):
