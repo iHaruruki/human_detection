@@ -87,6 +87,9 @@ class HumanDetectionNode(Node):
                                     cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
                         self.get_logger().info(text)
 
+                        #if distance < 2.0:
+                        #    self.get_logger().info("human detected")
+
         cv2.imshow("YOLOv8 Detection", color_image)
         cv2.waitKey(1)
 
