@@ -12,7 +12,7 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='Your Name',
+    maintainer='Haruki Isono',
     maintainer_email='you@example.com',
     description='MoveNet-based pose estimation node for ROS 2',
     license='Apache-2.0',
